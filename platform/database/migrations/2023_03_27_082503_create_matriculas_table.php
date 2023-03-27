@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('aluno_id')->constrained();
             $table->foreignId('curso_id')->constrained();
-            $table->string('periodo');
-            $table->integer('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

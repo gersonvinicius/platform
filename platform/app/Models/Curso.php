@@ -14,8 +14,8 @@ class Curso extends Model
     protected $fillable = ['titulo', 'descricao'];
     protected $dates = ['deleted_at'];
 
-    public function alunos()
+    public function matriculas()
     {
-        return $this->belongsToMany(Aluno::class);
+        return $this->belongsToMany(Matricula::class);
     }
 }

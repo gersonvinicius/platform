@@ -40,8 +40,10 @@ class CursoController extends Controller
         return view('admin.cursos.edit', compact('curso'));
     }
 
-    public function update(Request $request, Curso $curso)
+    public function update(Request $request, $id)
     {
+        $curso = Curso::findOrFail($id);
+
         $validatedData = $request->validate([
             'titulo' => 'required|min:5',
             'descricao' => 'required|min:10',

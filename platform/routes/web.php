@@ -24,7 +24,7 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    // rotas separadas
+    // rotas separadas alunos
     Route::get('alunos', 'App\Http\Controllers\AlunoController@index')->name('alunos.index');
     Route::get('alunos/create', 'App\Http\Controllers\AlunoController@create')->name('alunos.create');
     Route::post('alunos', 'App\Http\Controllers\AlunoController@store')->name('alunos.store');
@@ -33,6 +33,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::put('alunos/{id}', 'App\Http\Controllers\AlunoController@update')->name('alunos.update');
     Route::delete('alunos/{id}', 'App\Http\Controllers\AlunoController@destroy')->name('alunos.destroy');
 
-    // rotas resource
+    // rotas resource cursos
     Route::resource('cursos', 'App\Http\Controllers\CursoController');
+
+    // rotas separadas matriculas
+    Route::get('matriculas', 'App\Http\Controllers\MatriculaController@index')->name('matriculas.index');
+    Route::get('/matriculas/create', 'App\Http\Controllers\MatriculaController@create')->name('matriculas.create');
 });
