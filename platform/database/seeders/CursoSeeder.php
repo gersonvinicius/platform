@@ -22,6 +22,18 @@ class CursoSeeder extends Seeder
                 'titulo' => 'Curso de Laravel',
                 'descricao' => 'Aprenda a desenvolver aplicações web com Laravel',
             ],
+            [
+                'titulo' => 'Curso de Angular',
+                'descricao' => 'Aprenda a desenvolver aplicações web com Angular',
+            ],
+            [
+                'titulo' => 'Curso de Vue',
+                'descricao' => 'Aprenda a desenvolver aplicações web com Vue',
+            ],
+            [
+                'titulo' => 'Curso de React',
+                'descricao' => 'Aprenda a desenvolver aplicações web com React',
+            ],
             // Adicione mais cursos aqui
         ]);
     }
