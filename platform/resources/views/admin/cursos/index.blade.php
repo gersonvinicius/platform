@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Alunos')
+@section('title', 'Cursos')
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Listagem de Alunos</h3>
+                    <h3 class="box-title">Cursos</h3>
                     <div class="box-tools">
-                        <a href="{{ route('alunos.create') }}" class="btn btn-primary">Novo Aluno</a>
+                        <a href="{{ route('alunos.create') }}" class="btn btn-primary">Novo Curso</a>
                     </div>
                 </div>
                 <div class="box-body">
@@ -17,23 +17,21 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Data de Nascimento</th>
+                                <th>Título</th>
+                                <th>Descrição</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($alunos as $aluno)
+                            @foreach($cursos as $curso)
                                 <tr>
-                                    <td>{{ $aluno->id }}</td>
-                                    <td>{{ $aluno->nome }}</td>
-                                    <td>{{ $aluno->email }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($aluno->data_nascimento)->format('d/m/Y') }}</td>
+                                    <td>{{ $curso->id }}</td>
+                                    <td>{{ $curso->titulo }}</td>
+                                    <td>{{ $curso->descricao }}</td>
                                     <td>
-                                        <a href="{{ route('alunos.show', $aluno->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> Visualizar</a>
-                                        <a href="{{ route('alunos.edit', $aluno->id) }}" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> Editar</a>
-                                        <form method="POST" action="{{ route('alunos.destroy', $aluno->id) }}" style="display: inline-block;">
+                                        <a href="{{ route('cursos.show', $curso->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> Visualizar</a>
+                                        <a href="{{ route('cursos.edit', $curso->id) }}" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+                                        <form method="POST" action="{{ route('cursos.destroy', $curso->id) }}" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> Excluir</button>

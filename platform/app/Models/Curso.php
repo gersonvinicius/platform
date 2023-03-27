@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Aluno extends Model
+class Curso extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['nome', 'email', 'data_nascimento'];
+    protected $fillable = ['titulo', 'descricao'];
     protected $dates = ['deleted_at'];
 
-    public function cursos()
+    public function alunos()
     {
-        return $this->belongsToMany(Curso::class);
+        return $this->belongsToMany(Aluno::class);
     }
 }

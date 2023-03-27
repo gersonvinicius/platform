@@ -30,7 +30,10 @@
                             <input type="date" class="form-control" name="data_nascimento" value="{{ $aluno->data_nascimento }}" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <a href="{{ route('alunos.index') }}" class="btn btn-default">Voltar</a>
+                        </div>
                     </form>
                 </div>
             </div>
