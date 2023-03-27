@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Aluno;
 
+use Carbon\Carbon;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class AlunoController extends Controller
@@ -14,7 +17,7 @@ class AlunoController extends Controller
     {
         $alunos = Aluno::all();
 
-        return view('alunos.index', compact('alunos'));
+        return view('admin.alunos.index', compact('alunos'));
     }
 
     /**
@@ -22,7 +25,7 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        return view('alunos.create');
+        return view('admin.alunos.create');
     }
 
     /**
@@ -30,16 +33,21 @@ class AlunoController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'nome' => 'required|min:4',
+            'email' => 'required|email|unique:alunos',
+            'data_nascimento' => 'required|date',
+        ]);
+
         $aluno = new Aluno();
-
-        $aluno->nome = $request->input('nome');
-        $aluno->email = $request->input('email');
-        $aluno->data_nascimento = $request->input('data_nascimento');
-
+        $aluno->nome = $validatedData['nome'];
+        $aluno->email = $validatedData['email'];
+        $aluno->data_nascimento = $validatedData['data_nascimento'];
         $aluno->save();
 
-        return redirect()->route('alunos.index');
+        return redirect()->route('alunos.index')->with('success', 'Aluno criado com sucesso!');
     }
+
 
     /**
      * Display the specified resource.
@@ -48,7 +56,7 @@ class AlunoController extends Controller
     {
         $aluno = Aluno::findOrFail($id);
 
-        return view('alunos.show', compact('aluno'));
+        return view('admin.alunos.show', compact('aluno'));
     }
 
     /**
@@ -58,24 +66,36 @@ class AlunoController extends Controller
     {
         $aluno = Aluno::findOrFail($id);
 
-        return view('alunos.edit', compact('aluno'));
+        return view('admin.alunos.edit', compact('aluno'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $aluno = Aluno::findOrFail($id);
 
-        $aluno->nome = $request->input('nome');
-        $aluno->email = $request->input('email');
-        $aluno->data_nascimento = $request->input('data_nascimento');
+        $validatedData = $request->validate([
+            'nome' => 'required|min:4',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('alunos')->ignore($aluno->id),
+            ],
+            'data_nascimento' => 'required|date',
+        ]);
+
+        $aluno->nome = $validatedData['nome'];
+        $aluno->email = $validatedData['email'];
+        $aluno->data_nascimento = $validatedData['data_nascimento'];
 
         $aluno->save();
 
-        return redirect()->route('alunos.index');    
+        return redirect()->route('alunos.index')->with('success', 'Aluno alterado com sucesso!');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

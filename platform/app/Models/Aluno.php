@@ -14,8 +14,8 @@ class Aluno extends Model
     protected $fillable = ['nome', 'email', 'data_nascimento'];
     protected $dates = ['deleted_at'];
 
-    public function cursos()
-    {
-        return $this->belongsToMany(Curso::class);
-    }
+    // public function cursos()
+    // {
+    //     return $this->belongsToMany(Curso::class);
+    // }
 }
