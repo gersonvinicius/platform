@@ -9,21 +9,31 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            {!! Form::open(['url' => '/matriculas']) !!}
+            <form method="POST" action="{{ route('matriculas.store') }}">
+                @csrf
 
                 <div class="form-group">
-                    {!! Form::label('aluno_id', 'Aluno') !!}
-                    {!! Form::select('aluno_id', $alunos, null, ['class' => 'form-control']) !!}
+                    <label for="aluno_id">Aluno</label>
+                    <select name="aluno_id" id="aluno_id" class="form-control">
+                    @foreach ($alunos as $id => $nome)
+                        <option value="{{ $id }}">{{ $nome }}</option>
+                    @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('curso_id', 'Curso') !!}
-                    {!! Form::select('curso_id', $cursos, null, ['class' => 'form-control']) !!}
+                    <label for="curso_id">Curso</label>
+                    <select name="curso_id" id="curso_id" class="form-control">
+                    @foreach ($cursos as $id => $titulo)
+                        <option value="{{ $id }}">{{ $titulo }}</option>
+                    @endforeach
+                    </select>
                 </div>
 
-                {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{{ route('matriculas.index') }}" class="btn btn-default">Cancelar</a>
+            </form>
 
-            {!! Form::close() !!}
         </div>
     </div>
 @stop

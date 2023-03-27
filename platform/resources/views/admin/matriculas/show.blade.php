@@ -1,31 +1,19 @@
 @extends('adminlte::page')
 
-@section('title', 'Detalhes do Curso')
-
-@section('content_header')
-    <h1>Detalhes do Curso</h1>
-@stop
+@section('title', 'Detalhes da matrícula')
 
 @section('content')
-    <div class="box box-primary">
-        <div class="box-body">
-            <div class="form-group">
-                <label>Título:</label>
-                <p>{{ $curso->titulo }}</p>
-            </div>
-            <div class="form-group">
-                <label>Descrição:</label>
-                <p>{{ $curso->descricao }}</p>
-            </div>
-            <div class="form-group">
-                <label>Criado em:</label>
-                <p>{{ $curso->created_at->format('d/m/Y H:i:s') }}</p>
-            </div>
-            <div class="form-group">
-                <label>Última atualização:</label>
-                <p>{{ $curso->updated_at->format('d/m/Y H:i:s') }}</p>
-            </div>
-            <a href="{{ route('cursos.index') }}" class="btn btn-default">Voltar</a>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Detalhes da Matrícula</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>ID:</strong> {{ $matricula->id }}</p>
+            <p><strong>Aluno:</strong> {{ $matricula->aluno->nome }}</p>
+            <p><strong>Curso:</strong> {{ $matricula->curso->titulo }}</p>
+            <p><strong>Data da Matrícula:</strong> {{ $matricula->created_at->format('d/m/Y H:i:s') }}</p>
+            <p><strong>Última Atualização:</strong> {{ $matricula->updated_at->format('d/m/Y H:i:s') }}</p>
+            <a href="{{ route('matriculas.index') }}" class="btn btn-default">Voltar</a>
         </div>
     </div>
-@stop
+@endsection

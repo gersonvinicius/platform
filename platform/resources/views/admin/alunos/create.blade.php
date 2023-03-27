@@ -30,6 +30,7 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <a href="{{ route('alunos.index') }}" class="btn btn-default">Cancelar</a>
                     </div>
                 </form>
             </div>

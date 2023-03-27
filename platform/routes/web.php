@@ -19,10 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     // rotas separadas alunos
     Route::get('alunos', 'App\Http\Controllers\AlunoController@index')->name('alunos.index');
@@ -38,5 +37,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     // rotas separadas matriculas
     Route::get('matriculas', 'App\Http\Controllers\MatriculaController@index')->name('matriculas.index');
-    Route::get('/matriculas/create', 'App\Http\Controllers\MatriculaController@create')->name('matriculas.create');
+    Route::get('matriculas/create', 'App\Http\Controllers\MatriculaController@create')->name('matriculas.create');
+    Route::post('matriculas', 'App\Http\Controllers\MatriculaController@store')->name('matriculas.store');
+    Route::get('matriculas/{id}', 'App\Http\Controllers\MatriculaController@show')->name('matriculas.show');
+    Route::get('matriculas/{id}/edit', 'App\Http\Controllers\MatriculaController@edit')->name('matriculas.edit');
+    Route::put('matriculas/{id}', 'App\Http\Controllers\MatriculaController@update')->name('matriculas.update');
+    Route::delete('matriculas/{id}', 'App\Http\Controllers\MatriculaController@destroy')->name('matriculas.destroy');
 });

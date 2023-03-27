@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Curso')
+@section('title', 'Editar matrícula')
 
 @section('content_header')
-    <h1>Editar Curso</h1>
+    <h1>Editar matrícula</h1>
 @stop
 
 @section('content')
@@ -11,27 +11,28 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-body">
-                    <form role="form" method="POST" action="{{ route('cursos.update', $curso->id) }}">
-                        @method('PUT')
+                <form method="POST" action="{{ route('matriculas.update', $matricula->id) }}">
                         @csrf
-                        <div class="form-group{{ $errors->has('titulo') ? ' has-error' : '' }}">
-                            <label for="titulo">Título:</label>
-                            <input type="text" class="form-control" id="titulo" name="titulo" value="{{ old('titulo', $curso->titulo) }}" placeholder="Insira o título do curso">
-                            @if ($errors->has('titulo'))
-                                <span class="help-block"><strong>{{ $errors->first('titulo') }}</strong></span>
-                            @endif
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="aluno_id">Aluno:</label>
+                            <select name="aluno_id" class="form-control">
+                                @foreach($alunos as $id => $nome)
+                                    <option value="{{ $id }}" {{ $matricula->aluno_id == $id ? 'selected' : '' }}>{{ $nome }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
-                            <label for="descricao">Descrição:</label>
-                            <textarea class="form-control" id="descricao" name="descricao" placeholder="Insira a descrição do curso">{{ old('descricao', $curso->descricao) }}</textarea>
-                            @if ($errors->has('descricao'))
-                                <span class="help-block"><strong>{{ $errors->first('descricao') }}</strong></span>
-                            @endif
+                        <div class="form-group">
+                            <label for="curso_id">Curso:</label>
+                            <select name="curso_id" class="form-control">
+                                @foreach($cursos as $id => $titulo)
+                                    <option value="{{ $id }}" {{ $matricula->curso_id == $id ? 'selected' : '' }}>{{ $titulo }}</option>
+                                @endforeach
+                            </select>
                         </div>
-
-                        <div class="box-footer">
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary">Salvar</button>
-                            <a href="{{ route('cursos.index') }}" class="btn btn-default">Voltar</a>
+                            <a href="{{ route('matriculas.index') }}" class="btn btn-default">Voltar</a>
                         </div>
                     </form>
                 </div>

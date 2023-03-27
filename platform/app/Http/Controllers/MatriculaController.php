@@ -9,21 +9,22 @@ use Illuminate\Http\Request;
 
 class MatriculaController extends Controller
 {
-    public function index(Request $pesquisa)
+    public function index(Request $request)
     {
-        $matriculas = Matricula::select('matriculas.*', 'alunos.nome', 'alunos.email', 'cursos.titulo')
-                ->join('alunos', 'matriculas.aluno_id', '=', 'alunos.id')
-                ->join('cursos', 'matriculas.curso_id', '=', 'cursos.id')
-                ->where(function($query) use ($pesquisa) {
-                    $query->where('alunos.nome', 'like', '%'.$pesquisa.'%')
-                          ->orWhere('alunos.email', 'like', '%'.$pesquisa.'%');
-                })
-                ->get();
+        $query = Matricula::query()->leftJoin('alunos', 'matriculas.aluno_id', '=', 'alunos.id')
+                ->select('matriculas.*')
+                ->whereNull('matriculas.deleted_at');
 
-        // Agrupa as matriculas por curso
-        $matriculasPorCurso = $matriculas->groupBy('titulo');
-    
-        return view('admin.matriculas.index', compact('matriculasPorCurso'));
+        if ($request->has('search')) {
+            $query->where(function ($query) use ($request) {
+                $query->where('alunos.nome', 'like', '%' . $request->search . '%')
+                    ->orWhere('alunos.email', 'like', '%' . $request->search . '%');
+            });
+        }
+        
+        $matriculas = $query->get();
+
+        return view('admin.matriculas.index', compact('matriculas'));
     }
 
     public function create()
@@ -48,18 +49,21 @@ class MatriculaController extends Controller
     
         $matricula->save();
     
-        return redirect()->route('matriculas.index')->with('success', 'Matricula cadastrada com sucesso!');
+        // return redirect()->route('matriculas.index')->with('success', 'Matricula cadastrada com sucesso!');
+        return redirect()->route('matriculas.index', ['pesquisa' => '']);
     }
 
-    public function show(Matricula $matricula)
+    public function show($id)
     {
+        $matricula = Matricula::findOrFail($id);
         return view('admin.matriculas.show', compact('matricula'));
     }
 
-    public function edit(Matricula $matricula)
+    public function edit($id)
     {
-        $alunos = Aluno::all();
-        $cursos = Curso::all();
+        $matricula = Matricula::findOrFail($id);
+        $alunos = Aluno::pluck('nome', 'id');
+        $cursos = Curso::pluck('titulo', 'id');
         return view('admin.matriculas.edit', compact('matricula', 'alunos', 'cursos'));
     }
 
@@ -78,8 +82,9 @@ class MatriculaController extends Controller
             ->with('success', 'Matrícula atualizada com sucesso.');
     }
 
-    public function destroy(Matricula $matricula)
+    public function destroy($id)
     {
+        $matricula = Matricula::findOrFail($id);
         $matricula->delete();
 
         return redirect()->route('matriculas.index')
