@@ -36,8 +36,8 @@ class AlunoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nome' => 'Maria',
-                'email' => 'maria@teste.com',
+                'nome' => 'Luis',
+                'email' => 'luis@teste.com',
                 'data_nascimento' => '1994-03-05',
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
+        //     'password' => bcrypt('12345678'),
         // ]);
 
         $this->call(AlunoSeeder::class);
         $this->call(CursoSeeder::class);
+        $this->call(MatriculaSeeder::class);
     }
 }
